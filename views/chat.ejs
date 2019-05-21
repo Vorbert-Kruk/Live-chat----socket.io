@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Czat bez hat xD</title>
+</head>
+<body>
+    <div class="container">
+        <div class="left panel">
+            <h2 class="chat-header">Odebrane wiadomości</h2>
+            <div class="msg-container">
+                <% messages.forEach(msg => { %>
+                <div class="msg">
+                    <span class="user-name"><%= msg.messageAuthor %> :</span>
+                    <div class="msg-content"><%= msg.messageContent %></div>
+                </div>
+                <% }); %>
+            </div>
+            <div class="msg-input">
+                <input type="text" class="user-msg" spellcheck="false" placeholder="Napisz nową wiadomość...">
+                <span class="emoji-button">
+                    😎
+                </span>
+                <div class="emoji-container">
+                    <div class="emoji">
+                        <span>
+                            😊
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😎
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😁
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😆
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😉
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😒
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😰
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😱
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😵
+                        </span>
+                    </div>
+                    <div class="emoji">
+                        <span>
+                            😠
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right panel">
+            <h2 class="chat-header">Osoby online</h2>
+            <div class="user-container">
+                <div class="user">
+                    <span class="active-user"></span>
+                    <span class="user-name">Vorbert</span>
+                    <span class="">
+                        <span class="dot-1">.</span>
+                        <span class="dot-2">.</span>
+                        <span class="dot-3">.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./scripts/jquery.min.js"></script>
+    <script src="./scripts/socket.io.js"></script>
+    <script src="./scripts/main.js"></script>
+</body>
+</html>
+<!-- https://emojipedia.org -->

@@ -1,0 +1,284 @@
+:root {
+    --dark-color: #232323;
+    --light-color: #F4F4F4;
+    --darken-light-color: #D5D5D5;
+    --container-color: #565656;
+    --left-pane-color: #656565;
+    --right-pane-color: #898989;
+    --light-blue-color: hsl(210, 100%, 65%);
+    --darken-blue-color: hsl(210, 100%, 55%);
+    --active-color: hsl(105, 100%, 65%);
+
+    --container-size: 900px;
+    --container-height: calc(var(--container-size) * .75);
+
+    --header-offset: calc(var(--container-size) * .02); 
+
+    --icons-size: calc(var(--container-size) * .04);
+    --icons-color: var(--left-pane-color);
+
+    --input-font-size: calc(var(--header-offset) * 1.4);
+    --input-offset: calc(var(--input-font-size) * .7);
+
+    --user-padding: calc(var(--container-size) * .02);
+}
+* {
+    margin: 0;
+    padding: 0;
+    outline: none !important;
+}
+body {
+    background-color: var(--dark-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.container {
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    width: var(--container-size);
+    height: var(--container-height);
+    transform: translate(-50%, -50%);
+    background-color: var(--container-color);
+    border-radius: 0 0 7px 7px;
+    flex-direction: row;
+    overflow: hidden;
+}
+.panel {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
+.right {
+    flex: 2.5;
+    background-color: var(--right-pane-color);
+}
+.left {
+    flex: 8;
+    background-color: var(--left-pane-color);
+}
+h2.chat-header {
+    padding: 
+        var(--header-offset)
+        0;
+    color: var(--light-color);
+    text-align: center;
+    user-select: none;
+}
+/* 
+    Left panel
+*/
+.left .chat-header {
+    background-color: var(--light-blue-color);
+}
+.right .chat-header {
+    background-color: var(--darken-blue-color);
+}
+.left .msg-container {
+    position: relative;
+    display: flex;
+    flex: 8;
+    background-color: inherit;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+.left .msg-container .msg {
+    position: relative;
+    padding: 
+        calc(var(--input-offset) * .75)
+        var(--input-offset);
+}
+.left .msg-container .msg:not(:last-of-type) {
+    border-bottom: .5px dashed var(--light-blue-color);
+}
+.left .msg-container::-webkit-scrollbar {
+    background-color: #AFAFAF;
+}
+.left .msg-container::-webkit-scrollbar-thumb {
+  background: var(--light-color); 
+  border: 0 none !important;
+  outline: none !important;
+}
+.left .msg-container .msg span {
+    display: block;
+    color: var(--light-color);
+}
+.left .msg-container .msg .user-name {
+    font-size: calc(var(--input-font-size) * .75);
+    font-weight: bold;
+}
+.left .msg-container .msg .msg-content {
+    color: var(--darken-light-color);
+}
+.left .msg-input {
+    position: relative;
+    display: flex;
+    flex: 1;
+    /* background-color: green; */
+}
+.left .msg-input input {
+    flex: 1;
+    color: var(--dark-color);
+    border: 0 none;
+    font-size: var(--input-font-size);
+    padding-left: var(--input-offset);
+    background-color: var(--light-color);
+}
+.left .msg-input input::placeholder {
+    user-select: none;
+}
+.left .msg-input .emoji-button {
+    position: absolute;
+    top: 50%;
+    right: calc(var(--icons-size) * .5);
+    transform: translateY(-50%);
+    color: var(--icons-color);
+    font-size: var(--icons-size);
+    user-select: none;
+    cursor: pointer;
+}
+.left .msg-input .message-alert {
+    position: absolute;
+    padding: 
+        calc(var(--input-offset) * .35)
+        0
+        calc(var(--input-offset) * .35)
+        var(--input-offset);
+    top: calc(var(--input-font-size) * -1.35);
+    width: calc(100% - var(--input-offset));
+    font-size: calc(var(--input-font-size) * .7);
+    text-align: left;
+    color: var(--light-color);
+    background-color: var(--darken-blue-color);
+    border-radius: 
+        calc(var(--input-font-size) * .15)
+        calc(var(--input-font-size) * .15)
+        0
+        0;
+    cursor: pointer;
+}
+.left .msg-input .emoji-container {
+    position: absolute;
+    display: flex;
+    right: calc(var(--container-size) * -.238);
+    bottom: 0;
+    width: calc(var(--container-size) * .238);
+    height: calc(var(--container-height) / 9 * 1.79);
+    background-color: var(--light-color);
+    z-index: 2;
+    overflow: hidden;
+    flex-direction: row;
+    flex-wrap: wrap;
+    opacity: 0;
+    transition: opacity 500ms ease;
+}
+.left .msg-input .emoji-container.visible {
+    opacity: 1;
+}
+.left .msg-input .emoji-container .emoji {
+    position: relative;
+    width: 20%;
+    cursor: pointer;
+    user-select: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: 
+        background-color 400ms ease, 
+        opacity 500ms 150ms ease-out;
+}
+.left .msg-input .emoji-container.visible .emoji {
+    opacity: 1;
+    pointer-events: initial;
+}
+.left .msg-input .emoji-container .emoji:hover {
+    background-color: #E5E5E5;
+}
+.left .msg-input .emoji-container .emoji span {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--input-font-size);
+    pointer-events: none;
+}
+/* 
+    Right panel 
+*/
+.right .user-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+.right .user-container::-webkit-scrollbar {
+    opacity: 0;
+}
+.right .user-container div {
+    position: relative;
+    margin: 0 20px;
+    padding: var(--user-padding);
+    padding-left: calc(var(--user-padding) * .75);
+    padding-bottom: 0;
+}
+.right .user-container div > * {
+    user-select: none;
+}
+.right .active-user {
+    position: relative;
+    display: inline-block;
+    height: calc(var(--user-padding) * .7);
+    width: calc(var(--user-padding) * .7);
+    background-color: var(--active-color);
+    border-radius: 50%;
+}
+.right .user-name {
+    color: var(--light-color);
+    margin-left: calc(var(--user-padding) * .23);
+    font-size: calc(var(--user-padding) * 1.1);
+    font-weight: bold;
+}
+.right span:last-of-type span {
+    position: absolute;
+    bottom: 0px;
+    color: var(--light-color);
+    font-weight: bold;
+    font-size: 0;
+}
+.right span:last-of-type.typing span {
+    font-size: calc(var(--user-padding) * .85);
+}
+
+.right span:last-of-type span:first-of-type {
+    margin-left: 5px;
+}
+.right span:last-of-type span:nth-of-type(2) {
+    margin-left: 10px;
+}
+.right span:last-of-type span:last-of-type {
+    margin-left: 15px;
+}
+
+.right .typing span:first-of-type {
+    animation: dotAnimation 700ms 0ms infinite;
+}
+
+.right .typing span:nth-of-type(2) {
+    animation: dotAnimation 700ms 50ms infinite;
+}
+
+.right .typing span:last-of-type {
+    animation: dotAnimation 700ms 100ms infinite;
+}
+
+@keyframes dotAnimation {
+    0% {
+        bottom: 0;
+    }
+    50% {
+        bottom: 5px;
+    }
+    100% {
+        bottom: 0px;
+    }
+}
